@@ -10,16 +10,18 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('posts', [
-            'posts' => Post::latest()->with(['category', 'author'])->filter(request(['search']))->get(),
-            'categories' => Category::all()
+        return view('posts.index', [
+            'posts' => Post::latest()->with(['category', 'author'])
+                ->filter(
+                    request(['search', 'category', 'author'])
+                )->paginate(6)->withQueryString()
         ]);
     }
     public function show(Post $post)
     {
         //Post::where('slug', $post)->firstOrFail()
         // Find a post by its slug and pass it to a view called "post"
-        return view('post', [
+        return view('posts.show', [
             'post' => $post
         ]);
     }
