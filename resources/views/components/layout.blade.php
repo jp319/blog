@@ -8,6 +8,7 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <body style="font-family: 'Poppins', sans-serif;">
 <section class="px-6 py-8">
@@ -18,8 +19,18 @@
             </a>
         </div>
 
-        <div class="mt-8 md:mt-0">
-            <a href="/" class="text-xs font-bold uppercase">Home Page</a>
+        <div class="mt-8 md:mt-0 flex items-center">
+            @auth()
+                <span class="text-xs font-bold uppercase">Weclome, {{ auth()->user()->name }}!</span>
+
+                <form action="/logout" method="post" class="text-xs font-semibold text-blue-500 ml-6 mr-3">
+                    @csrf
+                    <button type="submit" class="font-medium">Log Out</button>
+                </form>
+            @else
+                <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                <a href="/login" class="ml-6 text-xs font-bold uppercase">Log In</a>
+            @endauth
 
             <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                 Subscribe for Updates
@@ -57,4 +68,5 @@
         </div>
     </footer>
 </section>
+<x-flash />
 </body>
