@@ -13,6 +13,7 @@
                 <p class="text-xs">
                     Posted on
                     <time>{{ $comment->created_at->format('F j, Y @ g:i a') }}</time>
+{{--                    <time>{{ $comment->created_at->diffForHumans() }}</time>--}}
                 </p>
             </header>
 
