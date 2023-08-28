@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PostController extends Controller
 {
@@ -19,7 +19,7 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        //Post::where('slug', $post)->firstOrFail()
+        // Post::where('slug', $post)->firstOrFail()
         // Find a post by its slug and pass it to a view called "post"
         return view('posts.show', [
             'post' => $post

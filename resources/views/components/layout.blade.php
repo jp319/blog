@@ -25,12 +25,25 @@
 
         <div class="mt-8 md:mt-0 flex items-center">
             @auth()
-                <span class="text-xs font-bold uppercase">Weclome, {{ auth()->user()->name }}!</span>
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold uppercase">Weclome, {{ auth()->user()->name }}!</button>
+                    </x-slot>
 
-                <form action="/logout" method="post" class="text-xs font-semibold text-blue-500 ml-6 mr-3">
-                    @csrf
-                    <button type="submit" class="font-medium">Log Out</button>
-                </form>
+                    {{-- @admin is a custom Blade directive made in AppServiceProvider.php --}}
+                    @admin
+                        <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">All Posts</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                    @endadmin
+
+                    <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()" class="text-red-500">Log Out</x-dropdown-item>
+
+                    <form id="logout-form" action="/logout" method="post" class="hidden">
+                        @csrf
+                    </form>
+
+                </x-dropdown>
+
             @else
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="ml-6 text-xs font-bold uppercase">Log In</a>
